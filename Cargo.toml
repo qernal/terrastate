@@ -1,0 +1,19 @@
+[package]
+name = "terrastate"
+version = "0.0.1"
+authors = ["Andrew Seymour <andrew.s@qernal.com>"]
+edition = "2018"
+
+[[bin]]
+name = "terrastate"
+path = "./src/main.rs"
+
+[dependencies]
+hyper = "0.14"
+tokio = { version = "1", features = ["full"] }
+etcd-client = "0.6.1"
+futures-util = "0.3.13"
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+regex = "1"
+base64 = "0.13.0"

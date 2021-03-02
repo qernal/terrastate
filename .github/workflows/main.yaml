@@ -1,0 +1,28 @@
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint repo
+    steps:
+      - uses: actions/checkout@v2
+      - uses: qernal/github-actions-rust-clippy@v1.1
+  build:
+    runs-on: ubuntu-latest
+    name: Build terrastate
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cargo build
+        shell: bash
+        run: |
+          docker build -t ghcr.io/qernal/terrastate/terrastate:${GITHUB_REF##*/} -f ./build/Dockerfile ./
+      - name: Push build
+        shell: bash
+        run: |
+          echo ${{ secrets.GH_PAT }} | docker login ghcr.io --username qernal --password-stdin
+          docker push ghcr.io/qernal/terrastate/terrastate:${GITHUB_REF##*/}
+  # test:
+  #   runs-on: ubuntu-latest
+  #   name: Test
+  #   needs: [lint, build]
