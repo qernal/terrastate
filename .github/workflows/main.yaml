@@ -16,7 +16,7 @@ jobs:
       - name: Cargo build
         shell: bash
         run: |
-          docker build -t ghcr.io/qernal/terrastate/terrastate:${GITHUB_REF##*/} -f ./build/Dockerfile ./
+          docker build -t ghcr.io/qernal/terrastate/terrastate:${GITHUB_REF##*/} -f ./Dockerfile ./
       - name: Push build
         shell: bash
         run: |
